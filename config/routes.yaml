@@ -1,0 +1,7 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+proveedor_borrar:
+  path: /proveedor/borrar/{id}
+  controller: App\Controller\ProveedorController::borrar
+  methods: [POST]

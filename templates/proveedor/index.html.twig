@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listado de Proveedores{% endblock %}
+
+{% block body %}
+    <h1>Listado de Proveedores</h1>
+
+    <a href="{{ path('proveedor_nuevo') }}" class="btn btn-primary mb-3">Nuevo Proveedor</a>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Tipo</th>
+            <th>Activo</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for proveedor in proveedores %}
+            <tr>
+                <td>{{ proveedor.nombre }}</td>
+                <td>{{ proveedor.email }}</td>
+                <td>{{ proveedor.telefono }}</td>
+                <td>{{ proveedor.tipo }}</td>
+                <td>{{ proveedor.activo ? 'Sí' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('proveedor_editar', {'id': proveedor.id}) }}" class="btn btn-warning btn-sm">Editar</a>
+                    <form method="post" action="{{ path('proveedor_borrar', {'id': proveedor.id}) }}" style="display:inline;" onsubmit="return confirm('¿Estás seguro de eliminar este proveedor?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ proveedor.id) }}">
+                        <button class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr><td colspan="6">No hay proveedores.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
